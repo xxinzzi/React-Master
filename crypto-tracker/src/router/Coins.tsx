@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 10px 20px;
   max-width: 480px;
   margin: 0 auto;
 `;
@@ -24,7 +25,7 @@ const Coin = styled.li`
   margin-bottom: 10px;
   border-radius: 15px;
   a {
-    padding: 20px; //링크의 범위를 크게
+    padding: 20px;
     transition: color 0.2s ease-in;
     display: flex;
     align-items: center;
@@ -43,7 +44,7 @@ const Title = styled.h1`
 
 const Loader = styled.div`
   text-align: center;
-  display: flex;
+  display: block;
 `;
 
 const Img = styled.img`
@@ -52,7 +53,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -63,27 +64,21 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const res = await axios("https://api.coinpaprika.com/v1/coins");
-      setCoins(res.data.slice(0, 100));
-      setLoading(false);
-    })();
-  }, []);
+  const { isLoading, data } = useQuery<ICoin[]>({
+    queryKey: ["allCoins"],
+    queryFn: fetchCoins,
+  });
 
   return (
     <Container>
       <Header>
         <Title>Coins</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={{ name: coin.name }}>
                 <Img
