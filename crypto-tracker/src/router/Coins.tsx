@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet-async";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -20,8 +21,9 @@ const Header = styled.div`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.textColor};
+  font-weight: 200;
   margin-bottom: 10px;
   border-radius: 15px;
   a {
@@ -71,6 +73,9 @@ function Coins() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Coins</title>
+      </Helmet>
       <Header>
         <Title>Coins</Title>
       </Header>
