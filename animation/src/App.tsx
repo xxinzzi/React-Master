@@ -8,8 +8,9 @@ import Scroll from "./animations/Scroll";
 import Path from "./animations/Path";
 import AnimateBoxPresence from "./animations/AnimatePresence";
 import Slider from "./animations/Slider";
+import OverLay from "./animations/OverLay";
 
 function App() {
-  return <Slider />;
+  return <OverLay />;
 }
 export default App;
