@@ -6,8 +6,10 @@ import Draging from "./animations/Draging";
 import Transform from "./animations/Transform";
 import Scroll from "./animations/Scroll";
 import Path from "./animations/Path";
+import AnimateBoxPresence from "./animations/AnimatePresence";
+import Slider from "./animations/Slider";
 
 function App() {
-  return <Path />;
+  return <Slider />;
 }
 export default App;
